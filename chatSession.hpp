@@ -15,6 +15,7 @@
 #include <iostream>
 #include <deque>
 #include <cstdlib>
+#include <chrono>
 
 class chat_session
         : public chat_participant,
