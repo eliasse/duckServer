@@ -45,7 +45,7 @@ public:
 
             if (participant->isSerialPort() && msg.isSerialPortData())
             {
-                std::cout << "AVOIDING LOOPING SERIAL PORT DATA\n";
+                //std::cout << "AVOIDING LOOPING SERIAL PORT DATA\n";
                 continue;
             }
 

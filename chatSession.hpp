@@ -31,7 +31,7 @@ public:
     void start()
     {
         room_.join(shared_from_this());
-        std::cout << "Connected: " << socket_.remote_endpoint() << std::endl;
+        std::cout << "\033[1;32Connection from: \033[0m\n" << socket_.remote_endpoint() << std::endl;
         do_read_header();
     }
 

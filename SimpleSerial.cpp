@@ -58,7 +58,7 @@ void SimpleSerial::readHandler(boost::system::error_code e, std::size_t bytes_re
         else {
             std::cout << "I read: " << bytes_read << " bytes." << std::endl;
             std::string str(boost::asio::buffers_begin(serialInBuffer.data()), boost::asio::buffers_begin(serialInBuffer.data()) + bytes_read);
-            std::cout << str << std::endl;
+            std::cout << "\033[1;33mFrom serial port: " << str << "\033[0m" << std::endl;
             callback_(str);
             serialInBuffer.consume(bytes_read);
         }

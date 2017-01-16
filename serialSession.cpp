@@ -21,7 +21,7 @@ void serialSession::deliver(const chat_message& msg) {
     try {
         boost::property_tree::json_parser::read_json(json_stream, ptree);
     } catch (boost::property_tree::json_parser_error parser_error) {
-        std::cerr << "Parsing error: Invalid JSON Data" << std::endl;
+        std::cerr << "\033[1;31mParsing error: Invalid JSON Data\033[0m\n";
         return;
     }
 
@@ -46,7 +46,7 @@ void serialSession::deliver(const chat_message& msg) {
 
 void serialSession::do_write()
 {
-    std::cout << "Writing to SerialPort: " << write_msgs_.front().body() << std::endl;
+    std::cout << "\033[1;33mWriting to SerialPort: " << write_msgs_.front().body() << "\033[0m" << std::endl;
     serialPort.write(*write_msgs_.front().body(), write_msgs_.front().body_length());
     write_msgs_.pop_front();
 
