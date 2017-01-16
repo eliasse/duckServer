@@ -21,7 +21,7 @@ void serialSession::deliver(const chat_message& msg) {
     try {
         boost::property_tree::json_parser::read_json(json_stream, ptree);
     } catch (boost::property_tree::json_parser_error parser_error) {
-        std::cout << parser_error.what() << std::endl;
+        std::cerr << "Parsing error: Invalid JSON Data" << std::endl;
         return;
     }
 
