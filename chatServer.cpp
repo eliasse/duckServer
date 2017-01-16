@@ -19,7 +19,7 @@ void chat_server::do_accept()
                            {
                                if (!ec)
                                {
-                                   std::__1::make_shared<chat_session>(std::__1::move(socket_), room_)->start();
+                                   std::make_shared<chat_session>(std::move(socket_), room_)->start();
                                }
 
                                do_accept();

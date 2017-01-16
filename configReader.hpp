@@ -15,9 +15,6 @@ struct configReader {
         } catch (boost::property_tree::file_parser_error &e) {
             std::cerr << e.what() << std::endl;
         }
-        catch (boost::property_tree::json_parser_error &e) {
-            std::cerr << e.what() << std::endl;
-        }
     }
 
     std::string getPortName() {

@@ -8,6 +8,7 @@
 #include "chat_message.hpp"
 #include "chatParticipant.hpp"
 #include <deque>
+#include <memory>
 
 class chat_participant;
 

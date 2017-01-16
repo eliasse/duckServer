@@ -21,12 +21,6 @@ int main(int argc, char* argv[])
 
     try
     {
-//        if (argc < 2)
-//        {
-//            std::cerr << "Usage: chat_server <port> [<port> ...]\n";
-//            return 1;
-//        }
-
         boost::asio::io_service io_service;
 
         try {
