@@ -20,20 +20,22 @@ void serialSession::deliver(const chat_message& msg) {
     boost::property_tree::ptree ptree;
     try {
         boost::property_tree::json_parser::read_json(json_stream, ptree);
-        for (boost::property_tree::ptree::value_type &entry : ptree.get_child("NMEA_SENTENCES")) {
-            std::string name = entry.first;
-            std::string data = (std::basic_string<char, std::char_traits<char>, std::allocator<char>> &&) entry.second.data();
-            chat_message out_msg;
-            out_msg.body_length(std::strlen(data.c_str()));
-            std::memcpy(out_msg.body(), data.c_str(), msg.body_length());
-            out_msg.encode_header();
-            write_msgs_.push_back(out_msg);
-
-            std::cout << "Found: " << name << " = " << data;
-            std::cout << "Messages in queue: " << write_msgs_.size() << std::endl;
-        }
     } catch (boost::property_tree::json_parser_error parser_error) {
         std::cout << parser_error.what() << std::endl;
+        return;
+    }
+
+    for (boost::property_tree::ptree::value_type &entry : ptree.get_child("NMEA_SENTENCES")) {
+        std::string name = entry.first;
+        std::string data = (std::basic_string<char, std::char_traits<char>, std::allocator<char>> &&) entry.second.data();
+        chat_message out_msg;
+        out_msg.body_length(std::strlen(data.c_str()));
+        std::memcpy(out_msg.body(), data.c_str(), msg.body_length());
+        out_msg.encode_header();
+        write_msgs_.push_back(out_msg);
+
+        std::cout << "Found: " << name << " = " << data;
+        std::cout << "Messages in queue: " << write_msgs_.size() << std::endl;
     }
 
     if (!write_in_progress)
