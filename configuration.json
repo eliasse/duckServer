@@ -1,0 +1,8 @@
+{
+  "SERIALPORT":"/dev/tty.usbmodem1411",
+  "BAUDRATE":"115200",
+  "VEHICLENAME":"DEFAULTDUCK",
+  "SERVER_PORTS": {
+    "":12
+  }
+}
