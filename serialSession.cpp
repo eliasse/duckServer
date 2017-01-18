@@ -15,7 +15,7 @@ void serialSession::deliver(const chat_message& msg) {
     std::cout << json;
     std::cout << "\n=======================================\n";
 
-    boost::iostreams::stream<boost::iostreams::array_source> json_stream(json.c_str(), json.size());
+    boost::iostreams::stream<boost::iostreams::array_source> json_stream(json.c_str(), msg.body_length());
 
     boost::property_tree::ptree ptree;
     try {
@@ -46,7 +46,7 @@ void serialSession::deliver(const chat_message& msg) {
 
 void serialSession::do_write()
 {
-    std::cout << "\033[1;33mWriting to SerialPort: " << write_msgs_.front().body() << "\033[0m" << std::endl;
+    std::cout << "\033[1;33;1mWriting to SerialPort: " << write_msgs_.front().body() << "\033[0m" << std::endl;
     serialPort.write(*write_msgs_.front().body(), write_msgs_.front().body_length());
     write_msgs_.pop_front();
 
@@ -65,17 +65,18 @@ void serialSession::readLineHandler(std::string str) {
     milliseconds ms = duration_cast<milliseconds>(system_clock::now().time_since_epoch());
     std::time_t time_ = std::time(nullptr);
     char *time = std::ctime(&time_);
+
     boost::property_tree::ptree ptree;
     ptree.put("SOURCE", "ARDUINO");
     ptree.put("TIME_UTC", time);
     ptree.put("TIME_UNIX", ms.count());
-    ptree.put("MESSAGES.NMEA", str.c_str());
+    ptree.put("NMEA_SENTENCES.NMEA", str.c_str());
+
     std::stringstream json;
     boost::property_tree::write_json(json, ptree);
-    std::cout << json.str() << std::endl;
-
     std::string json_string;
     json_string = json.str();
+    std::cout << json_string << std::endl;
 
     chat_message msg;
     msg.body_length(std::strlen(json_string.c_str()));
