@@ -28,6 +28,7 @@ void serialSession::deliver(const chat_message& msg) {
     for (boost::property_tree::ptree::value_type &entry : ptree.get_child("NMEA_SENTENCES")) {
         std::string name = entry.first;
         std::string data = (std::basic_string<char, std::char_traits<char>, std::allocator<char>> &&) entry.second.data();
+        data += "\n"; // Since the Arduino is looking for newlines to determine the end of an NMEA
         chat_message out_msg;
         out_msg.body_length(std::strlen(data.c_str()));
         std::memcpy(out_msg.body(), data.c_str(), msg.body_length());
